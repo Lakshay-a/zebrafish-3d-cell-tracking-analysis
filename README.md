@@ -5,8 +5,6 @@ time-lapse microscopy, reconstructs 3D objects, tracks them through time,
 extracts cell- and fish-level features, and evaluates genotype and treatment
 effects.
 
-Suggested GitHub repository name: `zebrafish-3d-cell-tracking-analysis`
-
 ## Repository scope
 
 This repository contains the software developed for the dissertation. Raw CZI
