@@ -292,15 +292,5 @@ rerunning the final experiments.
 - Absolute data locations are configurable; no main script depends on the
   original development machine.
 
-## Creating the KEATS supplementary archive
 
-Run:
-
-```bash
-bash create_submission_archive.sh
-```
-
-This creates `zebrafish-3d-cell-tracking-analysis-source.zip` beside the
-repository. The archive contains source, metadata, documentation, and the
-authorship declaration, but excludes generated data and third-party libraries.
 
