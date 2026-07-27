@@ -1,0 +1,10 @@
+block_name,fish_id,genotype,time_interval_seconds
+260512_block06,260512_block06,MUT,429.46 
+260513_block08,260513_block08,MUT,568.85
+260519_block01,260519_block01,WT,413.49
+260519_block05,260519_block05,WT,413.51
+260519_block07,260519_block07,MUT,413.51
+260519_block08,260519_block08,MUT,413.50
+260601_block01,260601_block01,WT,293.47
+260601_block03,260601_block03,WT,293.49
+260601_block05,260601_block05,WT,293.46
