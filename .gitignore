@@ -41,6 +41,10 @@ data/
 !Feature extraction/MMP_analysis_metadata.csv
 !Feature extraction/Liraglutide_metadata.csv
 
+# Curated, small final-analysis tables are intentionally versioned.
+!analysis_data/
+!analysis_data/**
+
 # Generated output directories
 overnight_batch_outputs/
 drift_qc/
@@ -58,3 +62,6 @@ Feature extraction/manual_injury_annotations*/
 # Submission archives
 *.zip
 
+
+# Outputs created by the public reproduction launchers
+reproduced_analysis/

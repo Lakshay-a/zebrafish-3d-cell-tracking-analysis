@@ -35,6 +35,10 @@ find "$REPO_ROOT/Feature extraction" -maxdepth 1 -type f \
 find "$REPO_ROOT/Feature extraction/plot_scripts" -maxdepth 1 -type f -name '*.py' \
   -exec cp {} "$PACKAGE_DIR/Feature extraction/plot_scripts/" \;
 
+if [ -d "$REPO_ROOT/analysis_data" ]; then
+  cp -R "$REPO_ROOT/analysis_data" "$PACKAGE_DIR/analysis_data"
+fi
+
 for metadata in \
   block_metadata.csv \
   MMP_metadata.csv \

@@ -1,0 +1,9 @@
+selected_order,feature
+1,fish_mean__mean_volume_um3
+2,fish_median__mean_extent_3d
+3,fish_median__mean_prolate_ellipticity
+4,fish_median__mean_oblate_ellipticity
+5,fish_mean__injury_exits_per_track
+6,fish_median__mean_aspect_ratio_3d
+7,fish_mean__mean_solidity_3d
+8,fish_mean__net_displacement_3d_um

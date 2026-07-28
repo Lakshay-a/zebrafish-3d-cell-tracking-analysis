@@ -1,0 +1,9 @@
+selected_order,feature
+1,fish_mean__tortuosity
+2,fish_median__mean_elongation
+3,fish_mean__injury_median_min_abs_distance_to_injury_um
+4,fish_mean__injury_entries_per_track
+5,fish_mean__injury_mean_fraction_detections_inside
+6,fish_median__mean_sphericity
+7,fish_mean__injury_exits_per_track
+8,fish_median__mean_volume_um3

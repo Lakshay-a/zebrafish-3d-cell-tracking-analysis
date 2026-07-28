@@ -108,6 +108,21 @@ Run commands from the repository root. Configuration is centralised in
 Set `CELL_TRACKING_DATA_ROOT`, `BATCH_OUTPUT_ROOT`, or `OVERNIGHT_DIR` instead
 of editing machine-specific paths.
 
+## Reproduce the final analyses
+
+The small, analysis-ready tables used by the four final classifiers and final
+model plots are included under [`analysis_data/`](analysis_data/). They are
+separate from the excluded raw images and large intermediate cell tables.
+
+```bash
+bash reproduce_final_analysis.sh
+bash reproduce_final_plots.sh
+```
+
+The classifier command uses seed 42 and 2,000 permutations by default. See
+[`analysis_data/README.md`](analysis_data/README.md) and
+[`REPRODUCIBILITY.md`](REPRODUCIBILITY.md) for scope and environment details.
+
 ## Expected external inputs
 
 - Raw Zeiss `.czi` time-lapse files.
@@ -275,6 +290,9 @@ the main pipeline:
 | `environment.yml` | Conda definition for the pinned Python environment. |
 | `REPRODUCIBILITY.md` | Environment, determinism, inputs, and rerun instructions. |
 | `capture_environment.py` | Records platform and package versions for each rerun. |
+| `analysis_data/` | Curated final fish-level inputs, result tables, coefficients, metadata, and checksums. |
+| `reproduce_final_analysis.sh` | Recreates the four final classifier result tables. |
+| `reproduce_final_plots.sh` | Recreates final-model stability and PCA plots. |
 | `.env.example` | Portable path and runtime configuration examples. |
 | `.gitignore` | Excludes raw data, generated outputs, caches, and local settings. |
 | `AUTHORSHIP_DECLARATION.txt` | Required sole-authorship certification. |

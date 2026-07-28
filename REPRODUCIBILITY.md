@@ -119,12 +119,25 @@ bash "Feature extraction/run_liraglutide_feature_pipeline.sh"
 
 ## Rerun the reported classifier experiments
 
-The final untreated classifier commands, including the model choices and 2,000
-permutations, are stored in one executable launcher:
+The curated final fish-level CSV inputs are supplied in `analysis_data/`.
+From the repository root, recreate the four final classifiers, their fold
+predictions, metrics, selected features, permutation tests, and summary:
 
 ```bash
-cd "Feature extraction"
-bash run_best_models.sh
+bash reproduce_final_analysis.sh
+```
+
+The public launcher uses seed 42, one numerical thread, and 2,000 permutations.
+For a quick installation test only, use:
+
+```bash
+PERMUTATIONS=10 bash reproduce_final_analysis.sh
+```
+
+Regenerate the final stability and PCA plots from the supplied final tables:
+
+```bash
+bash reproduce_final_plots.sh
 ```
 
 The scripts called by this launcher default to seed 42. Their output directories

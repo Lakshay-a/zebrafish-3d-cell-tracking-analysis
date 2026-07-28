@@ -1,0 +1,2 @@
+model_type,n_fish,balanced_accuracy,roc_auc,true_negative,false_positive,false_negative,true_positive
+calibrated_linear_svm,14,0.9444444444444444,0.9777777777777777,8,1,0,5
