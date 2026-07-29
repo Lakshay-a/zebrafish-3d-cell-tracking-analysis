@@ -16,4 +16,5 @@ tifffile
 torch
 tqdm
 zarr
-
+opencv-python
+Pillow

@@ -5,16 +5,25 @@ time-lapse microscopy, reconstructs 3D objects, tracks them through time,
 extracts cell- and fish-level features, and evaluates genotype and treatment
 effects.
 
-## Repository scope
+## Submission scope
 
-This repository contains the software developed for the dissertation. Raw CZI
-microscopy, TIFF stacks, trained Cellpose weights, generated figures, model
-artefacts, and large derived tables are not included because they are either
-study data, generated outputs, or third-party artefacts. The small metadata CSV
-files required to define cohorts and frame intervals are included.
+This repository is the supplementary source-code archive for the dissertation.
+It contains the complete developed software for dataset construction, Cellpose
+model training and evaluation, microscopy preprocessing, segmentation, 3D
+reconstruction, cell tracking, feature extraction, statistical modelling and
+figure generation. Well-known third-party libraries are not copied into the
+archive; they are declared in the requirements files and cited where adapted
+algorithms are implemented.
 
-The required authorship statement is in
-[`AUTHORSHIP_DECLARATION.txt`](AUTHORSHIP_DECLARATION.txt).
+The repository also contains a small curated `analysis_data/` package so the
+four reported final classifiers, result tables and final-model plots can be
+rerun without distributing the raw microscopy data. Raw CZI files, TIFF
+stacks, trained Cellpose weights, manual injury masks, large per-cell tables and
+generated figures remain external because they are data or generated
+artefacts, not source code.
+
+The required certification is provided verbatim, with typed signature and date,
+in [`AUTHORSHIP_DECLARATION.txt`](AUTHORSHIP_DECLARATION.txt).
 
 ## Quick start
 
@@ -108,8 +117,13 @@ of editing machine-specific paths.
 
 ## Reproduce the final analyses
 
-The small, analysis-ready tables used by the four final classifiers and final
-model plots are included under [`analysis_data/`](analysis_data/). They are
+The complete method is reproducible using the documented Mac Studio
+environment, pinned libraries and required external research data. The included
+analysis-ready CSVs make the reported final analyses directly reproducible:
+validation reproduced all four reported balanced accuracies exactly and
+regenerated all 52 final-model plots.
+
+The required tables are under [`analysis_data/`](analysis_data/). They are
 separate from the excluded raw images and large intermediate cell tables.
 
 ```bash
@@ -158,6 +172,25 @@ feature-analysis output directory.
 | `metadata.py` | Prints CZI dimensions and physical pixel sizes for configuration. |
 | `utils_reconstruct_musc.py` | MUSC-specific 2D-to-3D reconstruction and measurements. |
 | `utils_reconstruct_macrophage.py` | Macrophage-specific 2D-to-3D reconstruction and measurements. |
+
+### Dataset preparation and Cellpose model training
+
+| File | Description |
+| --- | --- |
+| `model_training/create_dataset_withDriftCorrection.py` | Creates the muSC Cellpose dataset using acquisition-level 70/15/15 splitting, drift correction and representative time/Z sampling. |
+| `model_training/create_macrophage_withDriftCorrection.py` | Creates the initial macrophage Cellpose dataset using the same split design. |
+| `model_training/add_new_macrophage.py` | Adds later macrophage acquisitions without changing existing split assignments. |
+| `model_training/manual_macrophages.py` | Imports manually exported Fiji macrophage frames into the dataset structure. |
+| `model_training/preprocess.py` | Applies percentile scaling and gamma preprocessing to macrophage images. |
+| `model_training/annotation_model_training.py` | Trains the initial custom Cellpose model from the `cpsam` base model. |
+| `model_training/annotation_model_finetuning.py` | Continues training from an external pilot model using validation loss, early stopping and learning-rate reduction. |
+| `model_training/convert_test_npy_to_masks.py` | Converts Cellpose GUI `_seg.npy` annotations into labelled TIFF masks. |
+| `model_training/evaluate_model.py` | Evaluates predicted instances using pixel overlap and assignment-based object matching. |
+| `model_training/test_model.py` | Runs a trained Cellpose model on held-out images and saves masks and overlays. |
+| `model_training/count_annotated_slices.py` | Counts completed Cellpose GUI annotations. |
+| `model_training/mask_check.py` | Checks that NPY annotations and exported TIFF masks are identical. |
+| `model_training/cleaning.py` | Moves auxiliary Cellpose outputs away from the training-image folders. |
+| `model_training/README.md` | Documents training-data layout, environment variables and script order. |
 
 ### Tracking implementation
 
@@ -240,6 +273,10 @@ scripts. Each script reads previously generated CSV tables and writes figures:
 | `make_shape_over_time_plots.py` | Plots longitudinal shape measurements. |
 | `make_six_group_fish_distributions.py` | Implements six-group distribution plotting. |
 | `make_z_movement_and_grouped_fish_plots.py` | Plots Z movement and grouped fish comparisons. |
+| `generate_nonselected_exploratory_distributions.py` | Generates explicitly labelled exploratory distributions for non-selected features. |
+| `run_fish_level_two_way_anova.py` | Runs fish-level genotype-by-condition two-way ANOVA analyses. |
+| `run_multivariate_confirmation_tests.py` | Runs confirmatory multivariate analyses on final fish-level tables. |
+| `test_injury_retention_recruitment_proxies.py` | Tests alternative injury retention and recruitment proxy definitions. |
 
 ### Pipeline launchers
 
@@ -293,8 +330,9 @@ the main pipeline:
 | `reproduce_final_plots.sh` | Recreates final-model stability and PCA plots. |
 | `.env.example` | Portable path and runtime configuration examples. |
 | `.gitignore` | Excludes raw data, generated outputs, caches, and local settings. |
-| `AUTHORSHIP_DECLARATION.txt` | Required sole-authorship certification. |
-| `create_submission_archive.sh` | Builds the source-only KEATS ZIP archive. |
+| `AUTHORSHIP_DECLARATION.txt` | Required sole-authorship certification with typed signature and date. |
+| `LICENSE` | Repository licence. |
+| `create_submission_archive.sh` | Builds the KEATS ZIP containing source, documentation, metadata and curated final-analysis CSVs. |
 
 ## Reproducibility notes
 
@@ -310,5 +348,39 @@ rerunning the final experiments.
 - Absolute data locations are configurable; no main script depends on the
   original development machine.
 
+## Reproduction levels
 
+The supplied material supports three levels of reuse:
 
+1. **Final reported analyses:** run `reproduce_final_analysis.sh` and
+   `reproduce_final_plots.sh` using the included `analysis_data/` CSVs.
+2. **Feature extraction onward:** provide the large tracked-cell tables and
+   metadata, then run the launchers under `Feature extraction/`.
+3. **Complete image-to-result workflow:** additionally provide the original CZI
+   files, annotations or trained Cellpose weights, manual injury masks and
+   acquisition metadata. Use `model_training/` to rebuild segmentation models,
+   then run the numbered root pipeline.
+
+The first level is self-contained apart from Python dependencies. Levels two
+and three require external research data that are not stored in Git.
+
+## Creating the KEATS supplementary archive
+
+From the repository root:
+
+```bash
+bash create_submission_archive.sh
+```
+
+This creates `zebrafish-3d-cell-tracking-analysis-source.zip` beside the
+repository. The archive includes source code, both README files, reproducibility
+instructions, the authorship declaration, metadata and curated final-analysis
+CSVs. It excludes raw images, masks, trained weights, generated figures, caches
+and third-party library source code.
+
+Before submission, verify:
+
+```bash
+unzip -t ../zebrafish-3d-cell-tracking-analysis-source.zip
+python capture_environment.py > environment_report.json
+```

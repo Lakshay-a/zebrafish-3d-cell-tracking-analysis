@@ -1,5 +1,12 @@
 #!/usr/bin/env python3
-"""Plot track-level feature distributions for every fish across all conditions."""
+"""Plot track-level feature distributions for every fish across all conditions.
+
+The violin shapes use Matplotlib's documented kernel-density visualization:
+https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.violinplot.html
+
+Displayed quantile limits use NumPy percentile calculations:
+https://numpy.org/doc/stable/reference/generated/numpy.percentile.html
+"""
 
 from __future__ import annotations
 

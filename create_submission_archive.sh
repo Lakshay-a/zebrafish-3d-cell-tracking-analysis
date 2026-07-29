@@ -25,6 +25,11 @@ find "$REPO_ROOT" -maxdepth 1 -type f \
 find "$REPO_ROOT/tracking_utils" -maxdepth 1 -type f -name '*.py' \
   -exec cp {} "$PACKAGE_DIR/tracking_utils/" \;
 
+mkdir -p "$PACKAGE_DIR/model_training"
+find "$REPO_ROOT/model_training" -maxdepth 1 -type f \
+  \( -name '*.py' -o -name '*.md' \) \
+  -exec cp {} "$PACKAGE_DIR/model_training/" \;
+
 find "$REPO_ROOT/qc_checks" -maxdepth 1 -type f -name '*.py' \
   -exec cp {} "$PACKAGE_DIR/qc_checks/" \;
 

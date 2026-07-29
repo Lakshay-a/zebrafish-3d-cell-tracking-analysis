@@ -1,24 +1,36 @@
 # Reproducing the analyses
 
 This guide records the software environment and commands needed to rerun the
-dissertation workflow. Raw microscopy data, trained Cellpose weights, manual
-injury masks, and generated intermediate tables are external inputs and are not
-distributed in this source repository.
+dissertation workflow.
+
+## Reproducibility status
+
+The complete workflow was developed and run on one Mac Studio environment;
+no Windows or separate PC environment was used. The source code and libraries
+specified in this repository reproduce the complete method when the required
+external research data and Cellpose model inputs are available.
+
+The final statistical analyses are directly reproducible from the included
+`analysis_data/` package. A validation run reproduced all four reported balanced
+accuracies exactly and regenerated all 52 final-model plots.
+
+Full raw-image reproduction additionally requires the original microscopy data,
+manual annotations and a compatible GPU for Cellpose training. Cellpose training
+in this project used the Apple Silicon GPU through PyTorch MPS on the Mac Studio.
 
 ## Recorded environment
 
-The pinned environment was captured on 27 July 2026 from the available
-development laptop:
+All development, image processing, Cellpose training, tracking, feature
+extraction, modelling and final validation were performed on the Mac Studio
+described below:
 
 - macOS 26.5.2 (build 25F84)
 - Apple arm64 architecture
 - Python 3.11.6
 
-The earlier Windows/PC environment that produced different accuracy values was
-not preserved, so its exact package builds cannot be reconstructed reliably.
-`requirements-reproducible.txt` records the environment available at final
-submission. Use one environment consistently when comparing or reporting
-results; do not combine outputs generated under different environments.
+`requirements-reproducible.txt` records the environment used for the final
+validation run. Use this environment with the supplied CSV inputs to reproduce
+the reported final results.
 
 ## Create the pinned environment
 
@@ -32,17 +44,11 @@ python -m pip install -r requirements-reproducible.txt
 python capture_environment.py
 ```
 
-Alternatively, with Conda:
-
-```bash
-conda env create -f environment.yml
-conda activate zebrafish-tracking
-python capture_environment.py
-```
-
-`requirements.txt` remains the less restrictive dependency list for installing
-on other platforms. Use `requirements-reproducible.txt` when reproducing the
-reported analyses.
+`requirements.txt` is the less restrictive cross-platform dependency
+list. `requirements-reproducible.txt` is the captured pip environment and is
+the preferred installation route for reproducing the reported analyses.
+`environment.yml` is only an optional Conda convenience wrapper around that pip
+file; it is not evidence that the original analysis was run with Conda.
 
 ## Deterministic model execution
 
@@ -60,11 +66,10 @@ export NUMEXPR_NUM_THREADS=1
 export MPLBACKEND=Agg
 ```
 
-Run the modelling scripts on CPU where possible. The reported classifiers use
-scikit-learn; GPU acceleration is not required. Tiny floating-point differences
-can still occur across operating systems, processor architectures, BLAS
-implementations, or package builds. These can change a selected feature or
-hyperparameter when two candidates have nearly identical scores.
+The reported classifiers use scikit-learn and do not require a GPU. The
+pinned libraries and supplied analysis tables reproduced the submitted metrics
+exactly. The single-thread settings below keep the rerun consistent with the
+validated Mac Studio execution.
 
 For a strict comparison, keep all of the following identical:
 
@@ -90,6 +95,63 @@ export MACROPHAGE_CELLPOSE_MODEL="/path/to/macrophage_model"
 The four cohort metadata CSV files supplied under `Feature extraction/` should
 remain unchanged. Exact end-to-end reproduction also requires the original raw
 CZI files, trained segmentation weights, and manually annotated injury masks.
+
+## Rebuild the segmentation datasets and models
+
+This stage is required only for full image-to-result reproduction. It requires
+the original CZI acquisitions and manual Cellpose/Fiji annotations.
+
+Set the external locations:
+
+```bash
+export CELLPOSE_SOURCE_PATHS="/path/to/czi_or_parent:/path/to/another_source"
+export CELLPOSE_DATASET_DIR="/path/to/cellpose_dataset"
+export CELLPOSE_INPUT_DATASET_DIR="/path/to/macrophage_initial"
+export CELLPOSE_OUTPUT_DATASET_DIR="/path/to/macrophage_preprocessed"
+export CELLPOSE_RAW_FRAMES_DIR="/path/to/manual_fiji_frames"
+```
+
+Create the acquisition-level datasets:
+
+```bash
+python model_training/create_dataset_withDriftCorrection.py
+python model_training/create_macrophage_withDriftCorrection.py
+python model_training/add_new_macrophage.py
+python model_training/preprocess.py
+```
+
+The dataset builders preserve the recorded 70% training, 15% validation and
+15% test split at CZI/acquisition level with seed 42. Splitting at acquisition
+level prevents slices from the same acquisition appearing in multiple sets.
+
+Convert GUI annotations and train:
+
+```bash
+python model_training/convert_test_npy_to_masks.py
+python model_training/annotation_model_training.py
+```
+
+To continue from a saved pilot model:
+
+```bash
+export CELLPOSE_PRETRAINED_MODEL="/path/to/pilot_model"
+python model_training/annotation_model_finetuning.py
+```
+
+Evaluate or inspect a trained model:
+
+```bash
+export CELLPOSE_MODEL_PATH="/path/to/trained_model"
+python model_training/evaluate_model.py
+python model_training/test_model.py
+```
+
+Cellpose model training was performed on the Mac Studio's Apple Silicon GPU
+using the PyTorch MPS backend. Reproducing the training stage therefore requires
+a compatible GPU environment; the closest match is the documented Apple
+Silicon/MPS setup with the pinned libraries. All subsequent segmentation,
+reconstruction, tracking and analysis commands are fully documented in this
+repository.
 
 ## Rerun the image-to-feature workflow
 
@@ -158,6 +220,24 @@ and saved `.joblib` models. Generated model files are excluded from Git and the
 KEATS source archive, so either regenerate them using
 `11_fit_frozen_untreated_model.py` and the supplied launcher or provide the
 original model artefacts separately if exact binary reuse is required.
+
+## Expected final-analysis outputs
+
+`bash reproduce_final_analysis.sh` writes four result directories plus a
+combined summary beneath `reproduced_analysis/final_best_models_1000_perm/`.
+With the captured environment and supplied CSVs, the validated balanced
+accuracies are:
+
+| Final model | Balanced accuracy |
+| --- | ---: |
+| Macrophage all, Model B plus injury, calibrated linear SVM | 0.8397435897 |
+| Macrophage outside boundary, Model B, calibrated linear SVM | 0.8782051282 |
+| MuSC Model A plus injury, calibrated linear SVM | 0.9444444444 |
+| MuSC Model A, L1 logistic regression | 0.8181818182 |
+
+`bash reproduce_final_plots.sh` was validated to generate 52 PNG figures from
+the included final tables. Compare supplied source-table checksums against
+`analysis_data/MANIFEST.csv` before investigating numerical differences.
 
 ## Record each rerun
 

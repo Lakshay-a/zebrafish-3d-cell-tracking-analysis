@@ -1,5 +1,12 @@
 #!/usr/bin/env python3
-"""Compare individual-fish feature values across three experimental conditions."""
+"""Compare individual-fish feature values across three experimental conditions.
+
+Plotting follows the Matplotlib scatter API:
+https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.scatter.html
+
+Medians and quartiles use NumPy's percentile implementation:
+https://numpy.org/doc/stable/reference/generated/numpy.percentile.html
+"""
 
 from __future__ import annotations
 

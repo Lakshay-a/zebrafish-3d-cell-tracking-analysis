@@ -17,6 +17,7 @@ PACKAGES = [
     "napari",
     "numpy",
     "pandas",
+    "Pillow",
     "qtpy",
     "scikit-image",
     "scikit-learn",
