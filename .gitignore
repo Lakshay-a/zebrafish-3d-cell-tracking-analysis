@@ -60,6 +60,7 @@ Feature extraction/frozen_untreated_models/
 Feature extraction/manual_injury_annotations*/
 
 # Submission archives
+create_submission_archive.sh
 *.zip
 
 
