@@ -94,7 +94,9 @@ export MACROPHAGE_CELLPOSE_MODEL="/path/to/macrophage_model"
 
 The four cohort metadata CSV files supplied under `Feature extraction/` should
 remain unchanged. Exact end-to-end reproduction also requires the original raw
-CZI files, trained segmentation weights, and manually annotated injury masks.
+CZI files and manually annotated injury masks. The final trained segmentation
+models are published in the [`segmentation-models-v1.0` release](https://github.com/Lakshay-a/zebrafish-3d-cell-tracking-analysis/releases/tag/segmentation-models-v1.0);
+their direct links and SHA-256 checksums are recorded in `README.md`.
 
 ## Rebuild the segmentation datasets and models
 

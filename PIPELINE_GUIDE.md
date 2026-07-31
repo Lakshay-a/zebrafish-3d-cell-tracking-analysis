@@ -16,8 +16,10 @@ pinned environment first by following `REPRODUCIBILITY.md`.
 | Raw CZI files and trained Cellpose models | [Raw-image pipeline](#complete-pipeline-from-raw-czi-files) | CZI-to-feature workflow |
 | Raw CZI files and manual annotations, but no trained model | [Cellpose training](#cellpose-dataset-preparation-and-training) | Trained segmentation model |
 
-Large microscopy images, segmentation masks, manual annotations and trained
-Cellpose model weights are external to this repository.
+Large microscopy images, segmentation masks and manual annotations are external
+to this repository. The final Cellpose models can be downloaded from the
+[`segmentation-models-v1.0` GitHub release](https://github.com/Lakshay-a/zebrafish-3d-cell-tracking-analysis/releases/tag/segmentation-models-v1.0); exact direct links and
+checksums are provided in `README.md`.
 
 ## Final tables and plots from included CSV files
 

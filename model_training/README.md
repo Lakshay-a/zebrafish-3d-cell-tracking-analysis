@@ -3,7 +3,9 @@
 These scripts reproduce acquisition-level dataset splitting, drift-corrected
 slice extraction, macrophage preprocessing, Cellpose annotation conversion,
 model training/fine-tuning, inference and evaluation. Dataset images, CZI files,
-manual annotations and trained weights are external and are not committed.
+manual annotations and trained weights are external and are not committed to
+the Git history. The final models are published as assets in the
+[`segmentation-models-v1.0` GitHub release](https://github.com/Lakshay-a/zebrafish-3d-cell-tracking-analysis/releases/tag/segmentation-models-v1.0).
 
 ## Configuration
 

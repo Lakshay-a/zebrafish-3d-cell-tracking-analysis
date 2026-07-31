@@ -62,6 +62,19 @@ export TRACKING_METHOD="nearest"
 The scripts read variables directly from the shell; `.env` is a documented
 template and is not loaded automatically.
 
+## Final segmentation models
+
+The exact Cellpose models used in the submitted workflow are available from the
+[`segmentation-models-v1.0` GitHub release](https://github.com/Lakshay-a/zebrafish-3d-cell-tracking-analysis/releases/tag/segmentation-models-v1.0):
+
+- [MuSC model: `musc_annotation_helper_v4`](https://github.com/Lakshay-a/zebrafish-3d-cell-tracking-analysis/releases/download/segmentation-models-v1.0/musc_annotation_helper_v4)
+  SHA-256: `16884817a008f747e04f75b2a7e207856687b7d1695f3870339e8f424e7c8bb0`
+- [Macrophage model: `macrophage_annotation_helper_v31`](https://github.com/Lakshay-a/zebrafish-3d-cell-tracking-analysis/releases/download/segmentation-models-v1.0/macrophage_annotation_helper_v31)
+  SHA-256: `ba3765b5393eaa49f330c0b9e42c748d43ef8973a99c666e3872b4bcbc381839`
+
+Download the required model and set `MUSC_CELLPOSE_MODEL` or
+`MACROPHAGE_CELLPOSE_MODEL` to its local path.
+
 ## Main workflow
 
 See [`PIPELINE_GUIDE.md`](PIPELINE_GUIDE.md) for a data-dependent guide to
