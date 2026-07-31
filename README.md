@@ -64,6 +64,9 @@ template and is not loaded automatically.
 
 ## Main workflow
 
+See [`PIPELINE_GUIDE.md`](PIPELINE_GUIDE.md) for a data-dependent guide to
+choosing the correct starting point and running each stage in order.
+
 Run commands from the repository root. Configuration is centralised in
 `config.py`.
 
@@ -323,6 +326,7 @@ the main pipeline:
 | `requirements.txt` | Cross-platform, unpinned Python dependencies. |
 | `requirements-reproducible.txt` | Versions captured from the final macOS arm64 environment. |
 | `environment.yml` | Conda definition for the pinned Python environment. |
+| `PIPELINE_GUIDE.md` | Data-dependent entry points, ordered commands, inputs, and outputs for the complete pipeline. |
 | `REPRODUCIBILITY.md` | Environment, determinism, inputs, and rerun instructions. |
 | `capture_environment.py` | Records platform and package versions for each rerun. |
 | `analysis_data/` | Curated final fish-level inputs, result tables, coefficients, metadata, and checksums. |
