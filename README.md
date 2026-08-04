@@ -17,10 +17,10 @@ algorithms are implemented.
 
 The repository also contains a small curated `analysis_data/` package so the
 four reported final classifiers, result tables and final-model plots can be
-rerun without distributing the raw microscopy data. Raw CZI files, TIFF
-stacks, trained Cellpose weights, manual injury masks, large per-cell tables and
-generated figures remain external because they are data or generated
-artefacts, not source code.
+rerun without distributing the raw microscopy data. The source plot collections
+used to assemble the dissertation and appendix figures are also included under
+`Feature extraction/`. Raw CZI files, TIFF stacks, manual injury masks, large
+per-cell tables and unrelated exploratory outputs remain external.
 
 The required certification is provided verbatim, with typed signature and date,
 in [`AUTHORSHIP_DECLARATION.txt`](AUTHORSHIP_DECLARATION.txt).
@@ -265,6 +265,20 @@ feature-analysis output directory.
 
 `Feature extraction/plot_scripts/` contains the final figure-generation
 scripts. Each script reads previously generated CSV tables and writes figures:
+
+The repository also retains the source plot collections used in the report and
+appendix:
+
+| Directory | Contents |
+| --- | --- |
+| `Feature extraction/plots_final_conditions/` | Final temporal, shape, movement and condition plots. |
+| `Feature extraction/plots_final_models/` | Final model stability and PCA plots. |
+| `Feature extraction/plots_final_models_expanded_pca/` | Condition-specific PCA contribution plots. |
+| `Feature extraction/plots_six_group_fish_distributions/` | Selected-feature distributions across untreated and treatment groups. |
+| `Feature extraction/statistical_tests_fish_level_two_way_anova_best_models/` | Corrected univariate and multivariate statistical plots. |
+| `Feature extraction/frozen_mmp_results/` | Frozen-model MMP result plots. |
+| `Feature extraction/frozen_liraglutide_results/` | Frozen-model liraglutide result plots. |
+| `Feature extraction/final_best_models_1000_perm/` | Four final best-model PCA source plots used in the appendix. |
 
 | File | Description |
 | --- | --- |
