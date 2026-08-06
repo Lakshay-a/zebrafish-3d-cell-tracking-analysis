@@ -394,24 +394,3 @@ The supplied material supports three levels of reuse:
 
 The first level is self-contained apart from Python dependencies. Levels two
 and three require external research data that are not stored in Git.
-
-## Creating the KEATS supplementary archive
-
-From the repository root:
-
-```bash
-bash create_submission_archive.sh
-```
-
-This creates `zebrafish-3d-cell-tracking-analysis-source.zip` beside the
-repository. The archive includes source code, both README files, reproducibility
-instructions, the authorship declaration, metadata and curated final-analysis
-CSVs. It excludes raw images, masks, trained weights, generated figures, caches
-and third-party library source code.
-
-Before submission, verify:
-
-```bash
-unzip -t ../zebrafish-3d-cell-tracking-analysis-source.zip
-python capture_environment.py > environment_report.json
-```
