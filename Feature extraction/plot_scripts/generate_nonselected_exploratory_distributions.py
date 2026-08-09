@@ -74,7 +74,6 @@ def common_nonselected_features(
 def run(command: list[str], working_dir: Path) -> None:
     environment = os.environ.copy()
     environment.setdefault("MPLBACKEND", "Agg")
-    environment.setdefault("MPLCONFIGDIR", "/private/tmp/matplotlib-codex")
     print("[RUN]", " ".join(command), flush=True)
     subprocess.run(command, cwd=working_dir, env=environment, check=True)
 

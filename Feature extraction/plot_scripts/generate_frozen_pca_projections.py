@@ -30,7 +30,6 @@ def main() -> None:
     script = Path(__file__).resolve().parent / "make_frozen_untreated_pca_projection.py"
     environment = os.environ.copy()
     environment.setdefault("MPLBACKEND", "Agg")
-    environment.setdefault("MPLCONFIGDIR", "/private/tmp/matplotlib-codex")
 
     for model_name, config in MODELS.items():
         tables = dict(config["tables"])

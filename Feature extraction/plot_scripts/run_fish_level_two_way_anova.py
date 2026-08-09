@@ -36,7 +36,6 @@ import os
 import re
 from pathlib import Path
 
-os.environ.setdefault("MPLCONFIGDIR", "/private/tmp/matplotlib-codex")
 os.environ.setdefault("MPLBACKEND", "Agg")
 
 import matplotlib.pyplot as plt

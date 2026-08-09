@@ -8,7 +8,6 @@ import os
 import re
 from pathlib import Path
 
-os.environ.setdefault("MPLCONFIGDIR", "/private/tmp/matplotlib-codex")
 
 import matplotlib.pyplot as plt
 import numpy as np

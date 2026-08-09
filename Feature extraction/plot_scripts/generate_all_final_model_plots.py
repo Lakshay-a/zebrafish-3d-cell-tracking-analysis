@@ -56,7 +56,6 @@ def parse_args() -> argparse.Namespace:
 def run(command: list[str], cwd: Path) -> None:
     environment = os.environ.copy()
     environment.setdefault("MPLBACKEND", "Agg")
-    environment.setdefault("MPLCONFIGDIR", "/private/tmp/matplotlib-codex")
     print(f"[RUN] {' '.join(command)}", flush=True)
     subprocess.run(command, cwd=cwd, env=environment, check=True)
 

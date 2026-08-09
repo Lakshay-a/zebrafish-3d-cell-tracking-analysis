@@ -92,7 +92,6 @@ def run(command: list[str], cwd: Path) -> None:
     print(f"[RUN] {' '.join(command)}", flush=True)
     environment = os.environ.copy()
     environment.setdefault("MPLBACKEND", "Agg")
-    environment.setdefault("MPLCONFIGDIR", "/private/tmp/matplotlib-codex")
     subprocess.run(command, cwd=cwd, env=environment, check=True)
 
 

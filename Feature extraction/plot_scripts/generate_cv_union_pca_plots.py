@@ -30,7 +30,6 @@ def main() -> None:
     scripts = Path(__file__).resolve().parent
     environment = os.environ.copy()
     environment.setdefault("MPLBACKEND", "Agg")
-    environment.setdefault("MPLCONFIGDIR", "/private/tmp/matplotlib-codex")
 
     for model_name, config in MODELS.items():
         stability_path = root / str(config["result"]) / "feature_selection_stability.csv"
