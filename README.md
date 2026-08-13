@@ -30,7 +30,7 @@ in [`AUTHORSHIP_DECLARATION.txt`](AUTHORSHIP_DECLARATION.txt).
 Python 3.11 was used during development.
 
 ```bash
-git clone https://github.com/<username>/zebrafish-3d-cell-tracking-analysis.git
+git clone https://github.com/Lakshay-a/zebrafish-3d-cell-tracking-analysis.git
 cd zebrafish-3d-cell-tracking-analysis
 python3 -m venv .venv
 source .venv/bin/activate
